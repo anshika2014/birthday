@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Birthday Surprise 🎂</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffd6e8, #d8f3dc);
+    text-align: center;
+    overflow: hidden;
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    color: #ff4d88;
+    margin-top: 30px;
+    font-size: 3rem;
+}
+
+.subtitle {
+    color: #4caf8f;
+    margin-bottom: 10px;
+}
+
+/* Music Button */
+.music-btn {
+    background: #ff85b3;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/* Cake */
+.cake {
+    position: relative;
+    width: 260px;
+    margin: 80px auto;
+}
+
+.layer {
+    height: 70px;
+    background: #ffb3d9;
+    border-radius: 20px;
+    margin-bottom: 8px;
+    box-shadow: inset 0 -8px #ff85b3;
+}
+
+.layer.middle {
+    width: 220px;
+    margin: auto;
+}
+
+.layer.top {
+    width: 180px;
+    margin: auto;
+}
+
+.candles {
+    position: absolute;
+    top: -50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+}
+
+.candle {
+    width: 12px;
+    height: 40px;
+    background: white;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+.flame {
+    width: 14px;
+    height: 20px;
+    background: orange;
+    border-radius: 50%;
+    position: absolute;
+    top: -20px;
+    left: -1px;
+    animation: flicker 0.4s infinite alternate;
+}
+
+.off {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+/* Animations */
+@keyframes flicker {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+/* Message */
+.message {
+    background: #ffffffcc;
+    display: inline-block;
+    padding: 25px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    animation: fall 4s linear infinite;
+}
+
+@keyframes fall {
+    from { transform: translateY(-10vh); }
+    to { transform: translateY(110vh); }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Make a Wish  🎂💖</h1>
+<p class="subtitle">Click the candles ✨</p>
+
+<button class="music-btn" onclick="playMusic()">🎵 Play Birthday Song</button>
+
+<audio id="song" loop>
+    <source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<div class="cake">
+    <div class="candles">
+        <div class="candle" onclick="blow(this)"><div class="flame"></div></div>
+        <div class="candle" onclick="blow(this)"><div class="flame"></div></div>
+        <div class="candle" onclick="blow(this)"><div class="flame"></div></div>
+    </div>
+
+    <div class="layer top"></div>
+    <div class="layer middle"></div>
+    <div class="layer"></div>
+</div>
+
+<div class="message">
+    💕 Happy Birthday HEHEHHEHE 💕<br>
+    May your life be filled with love,<br>
+    happiness, and endless smiles 🌸
+</div>
+
+<script>
+let blown = 0;
+
+function blow(candle) {
+    const flame = candle.querySelector(".flame");
+    if (!flame.classList.contains("off")) {
+        flame.classList.add("off");
+        blown++;
+        document.getElementById("song").play();
+    }
+
+    if (blown === 3) {
+        confettiBlast();
+    }
+}
+
+function playMusic() {
+    document.getElementById("song").play();
+}
+
+function confettiBlast() {
+    for (let i = 0; i < 100; i++) {
+        const conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.style.left = Math.random() * 100 + "vw";
+        conf.style.background = ["#ff4d88","#ffd6e8","#4caf8f","#ffffff"]
+            [Math.floor(Math.random()*4)];
+        conf.style.animationDuration = Math.random() * 3 + 2 + "s";
+        document.body.appendChild(conf);
+
+        setTimeout(() => conf.remove(), 5000);
+    }
+}
+</script>
+
+</body>
+</html>
